@@ -31,4 +31,20 @@ Section HilbertSAxiom.
           by [].
             by [].
   Qed.
+  
+  Theorem HS2 : (A -> (B -> C)) -> ((A -> B) -> (A -> C)).
+  Proof.
+    move => AtoBtoC_is_true AtoB_is_true A_is_true.
+      by apply: (MP B C); [apply: (MP A (B -> C)) | apply: (MP A B)].
+  Qed.
+
+  Theorem HS3 : (A -> (B -> C)) -> ((A -> B) -> (A -> C)).
+  Proof.
+    move => AtoBtoC_is_true AtoB_is_true A_is_true.
+      by move: A_is_true (AtoB_is_true A_is_true).
+  Qed.
+  
 End HilbertSAxiom.
+
+  
+  
