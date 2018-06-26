@@ -12,4 +12,19 @@ Section Logic.
     move => A0 B0 AtoB notB.
       by move /AtoB.
   Qed.
-  
+
+  Variables A B C : Prop.
+  Lemma AndOrDisL : ((A /\ C) \/ (B /\ C)) <-> ((A \/ B) /\ C).
+    Proof.
+      rewrite /iff.
+      apply: conj.
+      -case.
+       +case=> AisTrue CisTrue.
+          by apply: conj; [apply: or_introl | ].
+       +case=> BisTrue CisTrue.
+          by apply: conj; [apply: or_intror | ].
+      -case=>AorBisTrue CisTrue.
+       case: AorBisTrue => [AisTrue | BisTrue].
+       +by apply: or_introl.
+       +by apply: or_intror.
+    Qed.
