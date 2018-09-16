@@ -81,3 +81,7 @@ Proof. simpl. reflexivity. Qed.
 Example test_andb34: (andb3 true true false) = false.
 Proof. simpl. reflexivity. Qed.
 
+
+Check (negb true).
+
+Check negb.
