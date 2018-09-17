@@ -136,3 +136,39 @@ Fixpoint plus (n : nat) (m : nat) : nat :=
   end.
 
 Eval simpl in (plus (S (S (S O))) (S (S O))).
+
+Fixpoint mult (n m : nat) : nat :=
+  match n with
+    | O => O
+    | S n' => plus m (mult n' m)
+  end.
+
+Fixpoint minus (n m:nat) : nat :=
+  match n, m with
+  | O , _ => O
+  | S _ , O => n
+  | S n', S m' => minus n' m'
+  end.
+
+End Playground2.
+
+Fixpoint exp (base power : nat) : nat :=
+  match power with
+    | O => S O
+    | S p => mult base (exp base p)
+  end.
+
+Example test_mult1: (mult 3 3) = 9.
+Proof. simpl. reflexivity. Qed.
+
+Fixpoint factorial (n:nat) : nat :=
+  match n with
+  | O => 1
+  | S n'  => (mult n (factorial (n')))
+  end.
+
+Example test_factorial1: (factorial 3) = 6.
+Proof. simpl. reflexivity. Qed.
+Example test_factorial2: (factorial 5) = (mult 10 12).
+Proof. simpl. reflexivity. Qed.
+
