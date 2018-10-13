@@ -349,3 +349,10 @@ Proof.
   reflexivity.
   Case "c = false".
   rewrite <- H.
+  destruct b.
+  SCase "b = true".
+  reflexivity.
+  SCase "b = false".
+  reflexivity.
+Qed.
+
