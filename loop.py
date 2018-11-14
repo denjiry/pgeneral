@@ -3,9 +3,9 @@ def tableu(prop_list):
 
 
 def main():
-    ex = ["a and b",
-          'b or c',
-          'a > d']
+    ex = [['a', 'and', 'b'],
+          ['b', 'or', 'c'],
+          ['a', '>', 'd']]
     ex_bool = tableu(ex)
     for term in ex:
         print(term)
