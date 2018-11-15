@@ -39,8 +39,19 @@ class Or(Term):
         return '('+self.term1.__repr__()+' or '+self.term2.__repr__()+')'
 
 
-def tableu(prop_list):
+def is_separable(term):
     separable = [And, Or]
+    ret = False
+    for separable_type in separable:
+        if isinstance(term, separable_type):
+            ret = True
+    return ret
+
+
+def tableu(term_list):
+    for term in term_list:
+        if is_separable(term):
+            pass
     return True
 
 
