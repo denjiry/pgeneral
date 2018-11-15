@@ -40,6 +40,7 @@ class Or(Term):
 
 
 def tableu(prop_list):
+    separable = [And, Or]
     return True
 
 
@@ -71,9 +72,15 @@ def test():
 
 
 def main():
-    ex = [['a', 'and', 'b'],
-          ['b', 'or', 'c'],
-          ['a', '>', 'd']]
+    a = Term('a')
+    b = Term('b')
+    c = Term('c')
+    d = Term('d')
+    ex = [a,
+          Or(a, b),
+          And(b, c),
+          Or(c, Not(d)),
+          d]
     ex_bool = tableu(ex)
     for term in ex:
         print(term)
