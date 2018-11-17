@@ -39,6 +39,14 @@ class Or(Term):
         return '('+self.term1.__repr__()+' or '+self.term2.__repr__()+')'
 
 
+class TableauLeaf():
+    def __init__(self, parent, main, branch):
+        self.parent = parent
+        self.main = main
+        self.branch = branch
+        return
+
+
 def is_separable(term):
     separable = [And, Or]
     ret = False
