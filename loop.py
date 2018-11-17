@@ -48,7 +48,7 @@ def is_separable(term):
     return ret
 
 
-def tableu(term_list):
+def tableau(term_list):
     for term in term_list:
         if is_separable(term):
             pass
@@ -92,7 +92,7 @@ def main():
           And(b, c),
           Or(c, Not(d)),
           d]
-    ex_bool = tableu(ex)
+    ex_bool = tableau(ex)
     for term in ex:
         print(term)
     print('is', ex_bool)
