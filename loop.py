@@ -39,11 +39,19 @@ class Or(Term):
         return '('+self.term1.__repr__()+' or '+self.term2.__repr__()+')'
 
 
-class TableauLeaf():
-    def __init__(self, parent, main, branch):
-        self.parent = parent
+class Node():
+    def __init__(self, term, main, branch):
+        assert isinstance(term, Term)
+        assert isinstance(main, Node) or (main is None)
+        assert isinstance(branch, Node) or (branch is None)
+        self.term = term
         self.main = main
         self.branch = branch
+        return
+
+
+class Tree():
+    def __init__(self):
         return
 
 
@@ -53,6 +61,7 @@ def is_separable(term):
     for separable_type in separable:
         if isinstance(term, separable_type):
             ret = True
+            break
     return ret
 
 
