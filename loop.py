@@ -40,7 +40,7 @@ class Or(Term):
 
 
 class Node():
-    def __init__(self, term, main, branch):
+    def __init__(self, term, main, branch=None):
         assert isinstance(term, Term)
         assert isinstance(main, Node) or (main is None)
         assert isinstance(branch, Node) or (branch is None)
@@ -53,6 +53,14 @@ class Node():
 class Tree():
     def __init__(self):
         return
+
+
+def tail_main(root):
+    if root.main is None:
+        ret = root
+    else:
+        ret = tail_main(root.main)
+    return ret
 
 
 def is_separable(term):
@@ -70,6 +78,20 @@ def tableau(term_list):
         if is_separable(term):
             pass
     return True
+
+
+def test_node():
+    print('test_node')
+    a = Term('a')
+    b = Term('b')
+    aandb = And(a, b)
+    aornotb = Or(a, Not(b))
+    aornotborb = Or(aornotb, b)
+    root = Node(a, Node(b, Node(aandb, Node(aornotb, None))))
+    print(tail_main(root).term)
+    tail_main(root).main = Node(aornotborb, None)
+    print(tail_main(root).term)
+    return root
 
 
 def test_and_or():
@@ -96,6 +118,7 @@ def test_Not():
 def test():
     test_Not()
     test_and_or()
+    test_node()
     return
 
 
