@@ -63,6 +63,14 @@ def tail_main(root):
     return ret
 
 
+def traverse(node):
+    if node is None:
+        return
+    traverse(node.main)
+    traverse(node.branch)
+    return
+
+
 def is_separable(term):
     separable = [And, Or]
     ret = False
@@ -95,6 +103,7 @@ def test_node():
 
 
 def test_and_or():
+    print('test_and_or')
     a = Term('a')
     b = Term('b')
     aandb = And(a, b)
