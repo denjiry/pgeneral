@@ -63,12 +63,34 @@ def tail_main(root):
     return ret
 
 
-def traverse(node):
-    if node is None:
-        return
-    traverse(node.main)
-    traverse(node.branch)
-    return
+def collect_tails(root):
+    tails = []
+    node = root
+    next_node = None
+    prev = None
+    parents = [None]
+    while next_node != root:
+        print(node.term)
+        if prev is parents[-1]:
+            if node.main is not None:
+                next_node = node.main
+            elif node.branch is not None:
+                next_node = node.branch
+            else:
+                next_node = parents.pop()
+        elif prev is parents[-1].main:
+            if node.branch:
+                next_node = node.branch
+            else:
+                next_node = parents.pop()
+        else:
+            next_node = parents.pop()
+        # update
+        if (next_node is node.main) or (next_node is node.branch):
+            parents.append(node)
+        prev = node
+        node = next_node
+    return tails
 
 
 def is_separable(term):
@@ -99,6 +121,10 @@ def test_node():
     print(tail_main(root).term)
     tail_main(root).main = Node(aornotborb, None)
     print(tail_main(root).term)
+    print('test_collect_tails')
+    root.main.main.branch = Node(Term('c'), None)
+    tails = collect_tails(root)
+    print('tails:', tails)
     return root
 
 
@@ -132,6 +158,7 @@ def test():
 
 
 def main():
+    print('main')
     a = Term('a')
     b = Term('b')
     c = Term('c')
