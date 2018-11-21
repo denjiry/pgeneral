@@ -77,8 +77,9 @@ def collect_tails(root):
             elif node.branch is not None:
                 next_node = node.branch
             else:
+                tails.append(node)
                 next_node = parents.pop()
-        elif prev is parents[-1].main:
+        elif prev is node.main:
             if node.branch:
                 next_node = node.branch
             else:
@@ -124,7 +125,7 @@ def test_node():
     print('test_collect_tails')
     root.main.main.branch = Node(Term('c'), None)
     tails = collect_tails(root)
-    print('tails:', tails)
+    print('tails:', [t.term for t in tails])
     return root
 
 
