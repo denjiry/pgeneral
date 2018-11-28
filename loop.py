@@ -95,10 +95,10 @@ def collect_tails(root):
         # update
         if (next_node is node.main) or (next_node is node.branch):
             parents.append(node)
+        if (node is root) and (prev is not None):
+            end = True
         prev = node
         node = next_node
-        if node is root:
-            end = True
     print('TERM END.')
     return tails
 
@@ -148,11 +148,12 @@ def tableau(root):
     prev = None
     parents = [None]
     is_tableau_closed = True
+    end = False
     assert root.branch is None, 'root is required not to have .branch'
     if (root.main is None) and (root.branch is None):
         # if root is a node
         return False
-    while next_node != root:
+    while not end:
         print('current node:', node.term)
         if prev is parents[-1]:
             if node.main is not None:
@@ -169,6 +170,8 @@ def tableau(root):
         else:
             next_node = parents.pop()
         # update
+        if (node is root) and (prev is not None):
+            end = True
         if (next_node is node.main) or (next_node is node.branch):
             parents.append(node)
         prev = node
