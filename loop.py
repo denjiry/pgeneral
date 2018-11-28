@@ -157,6 +157,11 @@ def test_node():
     root.main.main.branch = Node(Term('c'), None)
     tails = collect_tails(root)
     print('tails:', [t.term for t in tails])
+    print('test_open_one_node')
+    root = Node(a, Node(b, Node(aandb, Node(aornotb, None))))
+    root.main.main.branch = Node(Term('c'), None)
+    tree = open_one_node(root)
+    # print('opened:', [t.term for t in tree])
     return root
 
 
