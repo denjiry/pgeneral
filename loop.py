@@ -71,7 +71,7 @@ def collect_tails(root):
     prev = None
     parents = [None]
     while next_node != root:
-        print(node.term)
+        print(node.term, end=', ')
         if prev is parents[-1]:
             if node.main is not None:
                 next_node = node.main
@@ -92,6 +92,7 @@ def collect_tails(root):
             parents.append(node)
         prev = node
         node = next_node
+    print('TERM END.')
     return tails
 
 
@@ -106,14 +107,11 @@ def is_separable(term):
     return ret
 
 
-def tableau(term_list):
-    for term in term_list:
-        if is_separable(term):
-            pass
-    return True
+def open_one_node(tree):
+    return tree
 
 
-def open_one_node(root):
+def tableau(root):
     node = root
     next_node = None
     prev = None
@@ -160,7 +158,12 @@ def test_node():
     print('test_open_one_node')
     root = Node(a, Node(b, Node(aandb, Node(aornotb, None))))
     root.main.main.branch = Node(Term('c'), None)
-    tree = open_one_node(root)
+    opened = open_one_node(root)
+    print('opened tails:', [t.term for t in collect_tails(opened)])
+    print('test_tableau')
+    root = Node(a, Node(b, Node(aandb, Node(aornotb, None))))
+    root.main.main.branch = Node(Term('c'), None)
+    tree = tableau(root)
     # print('opened:', [t.term for t in tree])
     return root
 
@@ -195,20 +198,20 @@ def test():
 
 
 def main():
-    print('main')
-    a = Term('a')
-    b = Term('b')
-    c = Term('c')
-    d = Term('d')
-    ex = [a,
-          Or(a, b),
-          And(b, c),
-          Or(c, Not(d)),
-          d]
-    ex_bool = tableau(ex)
-    for term in ex:
-        print(term)
-    print('is', ex_bool)
+    # print('main')
+    # a = Term('a')
+    # b = Term('b')
+    # c = Term('c')
+    # d = Term('d')
+    # ex = [a,
+    #       Or(a, b),
+    #       And(b, c),
+    #       Or(c, Not(d)),
+    #       d]
+    # ex_bool = tableau(ex)
+    # for term in ex:
+    #     print(term)
+    # print('is', ex_bool)
     return
 
 
