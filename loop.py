@@ -121,7 +121,7 @@ def separate(node):
 
 def open_top_node(tree):
     tails = collect_tails(tree)
-    if is_separable(tree):
+    if is_separable(tree.term):
         separated = separate(tree.term)
         for tail in tails:
             if len(separated) == 2:
