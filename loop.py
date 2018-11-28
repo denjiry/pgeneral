@@ -101,6 +101,7 @@ def collect_tails(root):
 
 def is_separable(term):
     # TODO: implement Not(a /\ b), Not(a \/ b)
+    assert isinstance(term, Term)
     separable = [And, Or]
     ret = False
     for separable_type in separable:
