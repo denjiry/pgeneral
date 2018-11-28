@@ -107,7 +107,26 @@ def is_separable(term):
     return ret
 
 
-def open_one_node(tree):
+def separate(node):
+    if isinstance(node, Or):
+        return [Node(node.term1, None), Node(node.term1, None)]
+    elif isinstance(node, And):
+        return [Node(node.term1, Node(node.term2, None))]
+    return []
+
+
+def open_top_node(tree):
+    tails = collect_tails(tree)
+    if is_separable(tree):
+        separated = separate(tree.term)
+        for tail in tails:
+            if len(separated) == 2:
+                tail.main = separated[0]
+                tail.branch = separated[1]
+            elif len(separated) == 1:
+                tail.main = separated[0]
+            else:
+                raise(NotImplementedError)
     return tree
 
 
@@ -116,6 +135,7 @@ def tableau(root):
     next_node = None
     prev = None
     parents = [None]
+    is_tableau_closed = True
     while next_node != root:
         print('current node:', node.term)
         if prev is parents[-1]:
@@ -137,7 +157,7 @@ def tableau(root):
             parents.append(node)
         prev = node
         node = next_node
-    return
+    return is_tableau_closed
 
 
 def test_node():
@@ -155,10 +175,10 @@ def test_node():
     root.main.main.branch = Node(Term('c'), None)
     tails = collect_tails(root)
     print('tails:', [t.term for t in tails])
-    print('test_open_one_node')
+    print('test_open_top_node')
     root = Node(a, Node(b, Node(aandb, Node(aornotb, None))))
     root.main.main.branch = Node(Term('c'), None)
-    opened = open_one_node(root)
+    opened = open_top_node(root)
     print('opened tails:', [t.term for t in collect_tails(opened)])
     print('test_tableau')
     root = Node(a, Node(b, Node(aandb, Node(aornotb, None))))
