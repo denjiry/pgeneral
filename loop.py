@@ -71,7 +71,6 @@ def collect_tails(root):
     prev = None
     parents = [None]
     end = False
-    assert root.branch is None, 'root is required not to have .branch'
     if (root.main is None) and (root.branch is None):
         # if root is a node
         return []
@@ -149,12 +148,13 @@ def tableau(root):
     parents = [None]
     is_tableau_closed = True
     end = False
-    assert root.branch is None, 'root is required not to have .branch'
     if (root.main is None) and (root.branch is None):
         # if root is a node
         return False
     while not end:
         print('current node:', node.term)
+        if not node.checked:
+            node = open_top_node(node)
         if prev is parents[-1]:
             if node.main is not None:
                 next_node = node.main
