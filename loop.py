@@ -117,7 +117,7 @@ def is_separable(term):
 
 def separate(node):
     if isinstance(node, Or):
-        return [Node(node.term1, None), Node(node.term1, None)]
+        return [Node(node.term1, None), Node(node.term2, None)]
     elif isinstance(node, And):
         return [Node(node.term1, Node(node.term2, None))]
     else:
