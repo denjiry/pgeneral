@@ -47,6 +47,7 @@ class Node():
         self.term = term
         self.main = main
         self.branch = branch
+        self.checked = False
         return
 
 
@@ -95,6 +96,7 @@ def collect_tails(root):
 
 
 def is_separable(term):
+    # TODO: implement Not(a /\ b), Not(a \/ b)
     separable = [And, Or]
     ret = False
     for separable_type in separable:
@@ -109,6 +111,35 @@ def tableau(term_list):
         if is_separable(term):
             pass
     return True
+
+
+def open_one_node(root):
+    node = root
+    next_node = None
+    prev = None
+    parents = [None]
+    while next_node != root:
+        print('current node:', node.term)
+        if prev is parents[-1]:
+            if node.main is not None:
+                next_node = node.main
+            elif node.branch is not None:
+                next_node = node.branch
+            else:
+                next_node = parents.pop()
+        elif prev is node.main:
+            if node.branch:
+                next_node = node.branch
+            else:
+                next_node = parents.pop()
+        else:
+            next_node = parents.pop()
+        # update
+        if (next_node is node.main) or (next_node is node.branch):
+            parents.append(node)
+        prev = node
+        node = next_node
+    return
 
 
 def test_node():
