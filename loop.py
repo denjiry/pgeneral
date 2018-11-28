@@ -70,10 +70,12 @@ def collect_tails(root):
     next_node = None
     prev = None
     parents = [None]
+    end = False
+    assert root.branch is None, 'root is required not to have .branch'
     if (root.main is None) and (root.branch is None):
         # if root is a node
         return []
-    while next_node != root:
+    while not end:
         print(node.term, end=', ')
         if prev is parents[-1]:
             if node.main is not None:
@@ -95,6 +97,8 @@ def collect_tails(root):
             parents.append(node)
         prev = node
         node = next_node
+        if node is root:
+            end = True
     print('TERM END.')
     return tails
 
@@ -116,10 +120,14 @@ def separate(node):
         return [Node(node.term1, None), Node(node.term1, None)]
     elif isinstance(node, And):
         return [Node(node.term1, Node(node.term2, None))]
+    else:
+        raise NotImplementedError
     return []
 
 
 def open_top_node(tree):
+    assert not tree.checked
+    tree.checked = True
     tails = collect_tails(tree)
     if is_separable(tree.term):
         separated = separate(tree.term)
@@ -140,9 +148,10 @@ def tableau(root):
     prev = None
     parents = [None]
     is_tableau_closed = True
+    assert root.branch is None, 'root is required not to have .branch'
     if (root.main is None) and (root.branch is None):
         # if root is a node
-        return []
+        return False
     while next_node != root:
         print('current node:', node.term)
         if prev is parents[-1]:
