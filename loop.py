@@ -70,6 +70,9 @@ def collect_tails(root):
     next_node = None
     prev = None
     parents = [None]
+    if (root.main is None) and (root.branch is None):
+        # if root is a node
+        return []
     while next_node != root:
         print(node.term, end=', ')
         if prev is parents[-1]:
@@ -136,6 +139,9 @@ def tableau(root):
     prev = None
     parents = [None]
     is_tableau_closed = True
+    if (root.main is None) and (root.branch is None):
+        # if root is a node
+        return []
     while next_node != root:
         print('current node:', node.term)
         if prev is parents[-1]:
