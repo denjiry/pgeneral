@@ -180,27 +180,27 @@ def tableau(root):
 
 
 def test_node():
-    print('test_node')
+    # print('test_node')
     a = Term('a')
     b = Term('b')
     aandb = And(a, b)
     aornotb = Or(a, Not(b))
     aornotborb = Or(aornotb, b)
     root = Node(a, Node(b, Node(aandb, Node(aornotb, None))))
-    print(tail_main(root).term)
+    # print(tail_main(root).term)
     tail_main(root).main = Node(aornotborb, None)
-    print(tail_main(root).term)
-    print('test_collect_tails')
+    # print(tail_main(root).term)
+    print('---------test_collect_tails---------')
     root.main.main.branch = Node(Term('c'), None)
     tails = collect_tails(root)
     print('tails:', [t.term for t in tails])
-    print('test_open_top_node')
+    print('---------test_open_top_node---------')
     root = Node(aornotb, Node(aandb, Node(a, None)))
     root.main.branch = Node(Term('c'), None)
     print('before tails:', [t.term for t in collect_tails(root)])
     opened = open_top_node(root)
     print('opened tails:', [t.term for t in collect_tails(opened)])
-    print('test_tableau')
+    print('---------test_tableau---------')
     root = Node(a, Node(b, Node(aandb, Node(aornotb, None))))
     root.main.main.branch = Node(Term('c'), None)
     tree = tableau(root)
@@ -209,15 +209,15 @@ def test_node():
 
 
 def test_and_or():
-    print('test_and_or')
+    # print('test_and_or')
     a = Term('a')
     b = Term('b')
     aandb = And(a, b)
     aornotb = Or(a, Not(b))
     aornotborb = Or(aornotb, b)
-    print(aandb)
-    print(aornotb)
-    print(aornotborb)
+    # print(aandb)
+    # print(aornotb)
+    # print(aornotborb)
     return
 
 
@@ -225,8 +225,8 @@ def test_Not():
     a = Term('a')
     nota = Not(a)
     notnota = Not(nota)
-    print(nota)
-    print(notnota)
+    # print(nota)
+    # print(notnota)
     return
 
 
