@@ -202,18 +202,19 @@ def print_tree(tree):
             else:
                 allnone = False
                 tmplist.append(n.branch)
-        tree_list.append(tmplist)
-        cur_list = tmplist
         if allnone:
             break
+        tree_list.append(tmplist)
+        cur_list = tmplist
 
+    print(tree_list)
     length = len(tree_list)
     for i, cur in enumerate(tree_list):
         print(' '*int(1.5*(length - i)), end='')
-    for c in cur:
-        print(c, end='')
-        print('|', end='')
-    print('')
+        for c in cur:
+            print(c, end='')
+            print('|', end='')
+        print('')
     return
 
 
