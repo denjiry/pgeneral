@@ -184,7 +184,7 @@ def tableau(root):
 def print_tree(tree):
     node = tree
     end = False
-    tree_list = []
+    tree_list = [[tree]]
     cur_list = [tree]
     while True:
         tmplist = []
@@ -230,6 +230,10 @@ def test_node():
     tail_main(root).main = Node(aornotborb, None)
     # print(tail_main(root).term)
     print('---------test_print_tree---------')
+    # (a \/ ~b)
+    # (a /\ b)
+    #   /  \
+    # a     c
     root = Node(aornotb, Node(aandb, Node(a, None)))
     root.main.branch = Node(Term('c'), None)
     print_tree(root)
