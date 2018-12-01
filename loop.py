@@ -179,6 +179,42 @@ def tableau(root):
     return is_tableau_closed
 
 
+def print_tree(tree):
+    node = tree
+    end = False
+    tree_list = []
+    cur_list = [tree]
+    while True:
+        tmplist = []
+        allnone = True
+        for n in cur_list:
+            if not isinstance(n, Node):
+                continue
+            if n.main is None:
+                tmplist.append(' ')
+            else:
+                allnone = False
+                tmplist.append(n.main)
+            if n.branch is None:
+                tmplist.append(' ')
+            else:
+                allnone = False
+                tmplist.append(n.branch)
+        tree_list.append(tmplist)
+        cur_list = tmplist
+        if allnone:
+            break
+
+    length = len(tree_list)
+    for i, cur in enumerate(tree_list):
+        print(' '*int(1.5*(length - i)), end='')
+    for c in cur:
+        print(c, end='')
+        print('|', end='')
+    print('')
+    return
+
+
 def test_node():
     # print('test_node')
     a = Term('a')
@@ -190,6 +226,10 @@ def test_node():
     # print(tail_main(root).term)
     tail_main(root).main = Node(aornotborb, None)
     # print(tail_main(root).term)
+    print('---------test_print_tree---------')
+    root = Node(aornotb, Node(aandb, Node(a, None)))
+    root.main.branch = Node(Term('c'), None)
+    print_tree(root)
     print('---------test_collect_tails---------')
     root.main.main.branch = Node(Term('c'), None)
     tails = collect_tails(root)
