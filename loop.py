@@ -50,6 +50,8 @@ class Node():
         self.checked = False
         return
 
+    def __repr__(self):
+        return str(self.term)
 
 class Tree():
     def __init__(self):
