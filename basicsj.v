@@ -395,3 +395,12 @@ Proof.
   Case "n = S n'".
   simpl. rewrite -> IHn'. reflexivity. Qed.
 
+Theorem plus_n_Sm : forall n m : nat,
+  S (n + m) = n + (S m).
+Proof.
+  intros n m. induction n as [| n'].
+  Case "n = 0".
+  simpl. reflexivity.
+  Case "n = S n'".
+  simpl. rewrite -> IHn'. reflexivity. Qed.
+
