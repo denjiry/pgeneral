@@ -182,39 +182,11 @@ def tableau(root):
 
 
 def print_tree(tree):
-    node = tree
-    end = False
-    tree_list = [[tree]]
-    cur_list = [tree]
-    while True:
-        tmplist = []
-        allnone = True
-        for n in cur_list:
-            if not isinstance(n, Node):
-                continue
-            if n.main is None:
-                tmplist.append(' ')
-            else:
-                allnone = False
-                tmplist.append(n.main)
-            if n.branch is None:
-                tmplist.append(' ')
-            else:
-                allnone = False
-                tmplist.append(n.branch)
-        if allnone:
-            break
-        tree_list.append(tmplist)
-        cur_list = tmplist
-
-    print(tree_list)
-    length = len(tree_list)
-    for i, cur in enumerate(tree_list):
-        print(' '*int(1.5*(length - i)), end='')
-        for c in cur:
-            print(c, end='')
-            print('|', end='')
-        print('')
+    print(tree)
+    if tree.main is not None:
+        print_tree(tree.main)
+    if tree.branch is not None:
+        print_tree(tree.branch)
     return
 
 
@@ -234,7 +206,9 @@ def test_node():
     # (a /\ b)
     #   /  \
     # a     c
-    root = Node(aornotb, Node(aandb, Node(a, None)))
+    # /
+    # b
+    root = Node(aornotb, Node(aandb, Node(a, Node(b, None))))
     root.main.branch = Node(Term('c'), None)
     print_tree(root)
     print('---------test_collect_tails---------')
