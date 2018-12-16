@@ -215,7 +215,7 @@ def _print_tree(tree, spaces=0):
         print('')
         print(' '*(spaces), end='')
         print('L--', end='')
-        _print_tree(tree.branch)
+        _print_tree(tree.branch, spaces+3)
     return
 
 
@@ -241,10 +241,18 @@ def test_node():
     # (a /\ b)
     #   /  \
     # a     c
-    # /
-    # b
-    root = Node(aornotb, Node(aandb, Node(a, Node(b, None))))
-    root.main.branch = Node(Term('c'), None)
+    # /     \
+    # b      d
+    # /\    / \
+    # e f   g  h
+    root = Node(aornotb, Node(aandb,
+                              Node(a, Node(b,
+                                           Node(Term('e'), None),
+                                           Node(Term('f'), None)))))
+    root.main.branch = Node(Term('c'),
+                            Node(Term('d'),
+                                 Node(Term('g'), None),
+                                 Node(Term('h'), None)))
     print_tree(root)
     print('---------test_collect_tails---------')
     root.main.main.branch = Node(Term('c'), None)
