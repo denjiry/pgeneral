@@ -181,12 +181,47 @@ def tableau(root):
     return is_tableau_closed
 
 
-def print_tree(tree):
-    print(tree)
+def mojisuu(node):
+    return len(node.__repr__())
+
+
+def _print_tree(tree, spaces=0):
+    '''
+    1.
+    node1---
+    [12345]
+    2.
+    node1---node2---
+    [1234512312345]
+    3.
+    node1---node2---node3
+    [123451231234512312345]
+    4.
+    node1---node2
+    node1---node2---node3\n
+    [1234512312345]
+    5.
+    node1---node2---node3
+                 L--node4
+    node1---node2---node3\nspacesL--node4
+    [123451231234512312345]
+    '''
+    print(tree, end='')
+    spaces += mojisuu(tree)
     if tree.main is not None:
-        print_tree(tree.main)
+        print('---', end='')
+        _print_tree(tree.main, spaces+3)
     if tree.branch is not None:
-        print_tree(tree.branch)
+        print('')
+        print(' '*(spaces), end='')
+        print('L--', end='')
+        _print_tree(tree.branch)
+    return
+
+
+def print_tree(tree):
+    _print_tree(tree)
+    print('')
     return
 
 
