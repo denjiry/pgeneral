@@ -407,20 +407,14 @@ Proof.
 Theorem plus_comm : forall n m : nat,
   n + m = m + n.
 Proof.
-  intros n m. induction n as [| n'].
+  intros n m.
+  induction n as [| n'].
   Case "n = 0".
-  simpl.
-  induction m as [| m'].
+  induction m as [|m'].
   SCase "m = 0".
-  simpl. reflexivity.
+  reflexivity.
   SCase "m = S m'".
-  simpl. rewrite <- IHm'. reflexivity.
+  simpl. rewrite <- IHm'. simpl. reflexivity.
   Case "n = S n'".
-  simpl. induction m as [| m'].
-  SCase "m = 0".
   simpl. rewrite -> IHn'.
-  simpl. reflexivity.
-  SCase "m = S m'".
-  simpl. rewrite -> IHn'. rewrite <- IHm'.
-  simpl. Admitted.
-
+  rewrite -> plus_n_Sm. reflexivity. Qed.
