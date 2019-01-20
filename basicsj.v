@@ -473,8 +473,27 @@ Proof.
   rewrite -> H.
   reflexivity. Qed.
 
-Theorem mult_comm : forall m n : nat,
- m * n = n * m.
+Theorem mult_help : forall n m: nat,
+    n * S m = n + n * m.
 Proof.
-Admitted.
+  intros n m.
+  induction n as [| n'].
+  SCase "n = 0".
+  simpl. reflexivity.
+  SCase "n = S n'".
+  simpl. rewrite <- plus_swap. rewrite -> IHn'. reflexivity. Qed.
+
+Theorem mult_comm : forall m n : nat,
+    m * n = n * m.
+Proof.
+  intros n m.
+  induction m as [| m'].
+  Case "m = 0".
+  simpl. induction n as [| n'].
+  SCase "n = 0".
+  reflexivity.
+  SCase "n = S n'".
+  simpl. rewrite -> IHn'. reflexivity.
+  Case "m = S m'".
+  simpl. rewrite <- IHm'. rewrite <- mult_help. reflexivity. Qed.
 
