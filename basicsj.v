@@ -497,3 +497,13 @@ Proof.
   Case "m = S m'".
   simpl. rewrite <- IHm'. rewrite <- mult_help. reflexivity. Qed.
 
+Theorem plus_swap' : forall n m p : nat,
+  n + (m + p) = m + (n + p).
+Proof.
+  intros n m p.
+  rewrite -> plus_assoc.
+  rewrite -> plus_assoc.
+  replace (n + m) with (m + n).
+  reflexivity.
+  rewrite -> plus_comm. reflexivity. Qed.
+
