@@ -1,3 +1,5 @@
+Require Export basicsj.
+
 Inductive natlist : Type :=
   | nil : natlist
   | cons : nat -> natlist -> natlist.
@@ -7,6 +9,7 @@ Definition l_123 := cons 1 (cons 2 (cons 3 nil)).
 Notation "x :: l" := (cons x l) (at level 60, right associativity).
 Notation "[ ]" := nil.
 Notation "[ x , .. , y ]" := (cons x .. (cons y nil) ..).
+
 Theorem silly1 : forall (n m o p : nat),
      n = m ->
      [n,o] = [n,p] ->
@@ -15,3 +18,41 @@ Proof.
   intros n m o p eq1 eq2.
   rewrite <- eq1.
   apply eq2. Qed.
+
+Theorem silly2 : forall (n m o p : nat),
+     n = m ->
+     (forall (q r : nat), q = r -> [q,o] = [r,p]) ->
+     [n,o] = [m,p].
+Proof.
+  intros n m o p eq1 eq2.
+  apply eq2. apply eq1. Qed.
+
+Theorem silly2a : forall (n m : nat),
+     (n,n) = (m,m) ->
+     (forall (q r : nat), (q,q) = (r,r) -> [q] = [r]) ->
+     [n] = [m].
+Proof.
+  intros n m eq1 eq2.
+  apply eq2. apply eq1. Qed.
+
+Theorem silly_ex :
+     (forall n, evenb n = true -> oddb (S n) = true) ->
+     evenb 3 = true ->
+     oddb 4 = true.
+Proof.
+  intros.
+  apply H. apply H0. Qed.
+
+Theorem silly3 : forall (n : nat),
+     true = beq_nat n 5 ->
+     beq_nat (S (S n)) 7 = true.
+Proof.
+  intros n H.
+  symmetry.
+  simpl.   apply H. Qed.
+
+(* Theorem rev_exercise1 : forall (l l' : natlist), *)
+(*      l = rev l' -> *)
+(*      l' = rev l. *)
+(* Proof. *)
+(* Admitted. *)
