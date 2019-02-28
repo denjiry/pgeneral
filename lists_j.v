@@ -208,8 +208,6 @@ Definition option_elim (o : natoption) (d : nat) : nat :=
   | None => d
   end.
 
-
-
 Theorem silly1 : forall (n m o p : nat),
      n = m ->
      [n,o] = [n,p] ->
@@ -251,8 +249,33 @@ Proof.
   symmetry.
   simpl.   apply H. Qed.
 
+Theorem beq_nat_sym : forall (n m : nat),
+  beq_nat n m = beq_nat m n.
+Proof.
+  intros n. induction n as [| n'].
+Admitted.
 (* Theorem rev_exercise1 : forall (l l' : natlist), *)
 (*      l = rev l' -> *)
 (*      l' = rev l. *)
 (* Proof. *)
 (* Admitted. *)
+End NatList.
+
+Module Dictionary.
+
+Inductive dictionary : Type :=
+  | empty : dictionary
+  | record : nat -> nat -> dictionary -> dictionary.
+
+Definition insert (key value : nat) (d : dictionary) : dictionary :=
+  (record key value d).
+
+Fixpoint find (key : nat) (d : dictionary) : option nat :=
+  match d with
+  | empty => None
+  | record k v d' => if (beq_nat key k) then (Some v) else (find key d')
+  end.
+
+End Dictionary.
+
+Definition beq_nat_sym := NatList.beq_nat_sym.
