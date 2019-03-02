@@ -150,3 +150,43 @@ Inductive ExSet : Type :=
   | con1 : bool -> ExSet
   | con2 : nat -> ExSet -> ExSet.
 
+Inductive tree (X:Type) : Type :=
+  | leaf : X -> tree X
+  | node : tree X -> tree X -> tree X.
+Check tree_ind.
+
+Inductive mytype (X:Type): Type :=
+  | constr1 : X -> mytype X
+  | constr2 : nat -> mytype X
+  | constr3 : mytype X -> nat -> mytype X.
+
+Check mytype_ind.
+
+Inductive foo (X Y:Type) : Type :=
+  | bar : X -> foo X Y
+  | baz : Y -> foo X Y
+  | quux : (nat -> foo X Y) -> foo X Y.
+
+Check foo_ind.
+
+Inductive foo' (X:Type) : Type :=
+  | C1 : list X -> foo' X -> foo' X
+  | C2 : foo' X.
+
+Check foo'_ind.
+
+Definition P_m0r (n:nat) : Prop :=
+  n * 0 = 0.
+
+Definition P_m0r' : nat->Prop :=
+  fun n => n * 0 = 0.
+
+Theorem mult_0_r'' : forall n:nat,
+  P_m0r n.
+Proof.
+  apply nat_ind.
+  Case "n = O". reflexivity.
+  Case "n = S n'".
+    unfold P_m0r. simpl. intros n' IHn'.
+    apply IHn'. Qed.
+
