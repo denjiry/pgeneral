@@ -108,4 +108,9 @@ Definition okd_before2 := forall d1 d2 d3,
 
 Theorem okd_before2_valid : okd_before2.
 Proof.
-Admitted.
+  unfold okd_before2.
+  intros.
+  apply okd_before in H0. apply H0.
+  apply okd_before in H1. apply H1.
+  apply H. Qed.
+
