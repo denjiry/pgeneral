@@ -114,3 +114,39 @@ Proof.
   apply okd_before in H1. apply H1.
   apply H. Qed.
 
+Definition okd_before2_valid' : okd_before2 :=
+  fun (d1 d2 d3 : day) =>
+  fun (H : ok_day d3) =>
+  fun (H0 : day_before d2 d1) =>
+  fun (H1 : day_before d3 d2) =>
+  okd_before d1 d2 (okd_before d2 d3 H H1) H0.
+
+Theorem mult_0_r' : forall n:nat,
+  n * 0 = 0.
+Proof.
+  apply nat_ind.
+  Case "O". reflexivity.
+  Case "S". simpl. intros n IHn. rewrite -> IHn.
+    reflexivity. Qed.
+
+Inductive yesno : Type :=
+  | yes : yesno
+  | no : yesno.
+
+Inductive rgb : Type :=
+  | red : rgb
+  | green : rgb
+  | blue : rgb.
+
+Check rgb_ind.
+
+Inductive natlist : Type :=
+  | nnil : natlist
+  | ncons : nat -> natlist -> natlist.
+
+Check natlist_ind.
+
+Inductive ExSet : Type :=
+  | con1 : bool -> ExSet
+  | con2 : nat -> ExSet -> ExSet.
+
